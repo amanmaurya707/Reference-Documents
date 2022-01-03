@@ -1,0 +1,32 @@
+$ git init
+$ git remote add origin git@github.com:abeelan/vue_demo.git
+$ git branch -M main
+$ git push -u origin main
+Execute the third line of command, and an error occurs when changing the branch name
+
+error: refname refs/heads/master not found
+fatal: Branch rename failed
+
+
+
+
+
+$ git init
+$ git remote add origin git@github.com:abeelan/vue_demo.git
+$ git add .
+$ git commit -m "demo finished"
+$ git branch -M main
+$ git push -u origin main
+To modify the branch name, you need to have a commit before you can change it.
+
+
+[rejected] failed to push to some refs
+
+Try this git command
+
+git push origin master --force
+or short of force -f
+
+git push origin master -f
+
+https://www.varonis.com/blog/git-branching/

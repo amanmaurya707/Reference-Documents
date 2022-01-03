@@ -1,0 +1,25 @@
+Unit Testing ?
+testing the single component,methods or module or db or integration any things by passing the different input and check the expected and actual output/reuslt is correct or not.
+
+who is responsible for unit testing ?
+developer is responsible for unit testing.
+
+To Test the microservices we have different types of testing framework is available.
+Junit:junit provides fundamentals of writing unit test cases.
+Mockito:Mocking external dependency(has dependency)
+MockMVC:Calling Controller method without starting spring boot server.
+RestTemplate:Integrating Testing(communication between microservices).
+H2 db:creating mock db(use )
+suppose if db is not available and i don't like to work on realtime database which is use in production then create a mock db and test database separately.
+
+
+in microservices we already tested using the postman then what is need of unit testing?
+we can test fully but can't test individually 
+like controller,service,repository
+hence we are using unit testing
+
+
+
+
+  
+  

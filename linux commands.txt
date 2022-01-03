@@ -1,0 +1,154 @@
+//install mysql client
+ 
+sudo is nothing but admin permission
+
+//clear 
+for clearing the screen
+
+//mysql -u root -h microdb.cvtdpv45uelx.us-east-2.rds.amazonaws.com -p
+12345678
+
+//mysql commands for creating database
+create database db_name;
+
+//view/show all mysql database
+show databases;
+
+//switch/change/use/create new db if doesn't exist database
+use db_name;
+
+//show/view all tables from database
+show tables;
+
+//dumping the local db to remote db [execute cmd from local system of mysql server bin/xampp mysql bin path]
+mysqldump -hlocalhost -P3306 -uroot -proot customerdb | mysql -hmicrodb.cvtdpv45uelx.us-east-2.rds.amazonaws.com -P3306 -uroot -p12345678 customerdb
+
+
+
+//installing jdk on linux machine through putty
+sudo yum install java-1.8.0-openjdk-devel -y
+
+//check java version is install or exist is not
+java -version
+
+//clear the screen
+clear
+//quit or exit the terminal
+exit
+
+//installing maven on linux machine throuh putty
+sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
+//extracting the maven tar or unzip file on linux machine or virtual server(on window machine zip file is called jar and on linux machine zip file is called tar)
+sudo tar -xvzf  apache-maven-3.8.4-bin.tar.gz
+
+//installing the git on linux machine or virtual machine or cloud
+sudo yum install git
+//see all git commands
+git
+//clone the git repository into virtual server
+git clone https://github.com/amanmaurya707/one.git
+//unzip the folder into virtual server
+sudo unzip services1.zip
+//change the virtual server directory or path
+cd
+//installing zipkin on linux machine or virtual server or cloud
+curl -sSL https://zipkin.io/quickstart.sh | bash -s
+//running the zipkin on linux machine  or virtual server or cloud
+java -jar zipkin.jar
+
+//run the java or spring boot application on virtual server/aws cloud [through putty]
+//before executing spring boot/java appln check maven is set inside path[like classpath]
+//to check maven with version //if not set then it say command not found
+mvn -version
+//setting the maven bin path to classpath/path //$PATH indicates adding current path
+export PATH=/home/ec2-user/apache-maven-3.8.4/bin:$PATH
+//also check the Read Write and Execute permissions
+//assign permission[from parent directory]
+sudo chmod 777 EurekaServer/
+//create/package spring boot appln into a jar under target directory
+mvn package
+//run spring boot appln jar [& indicates run appln or process into background. note:if not use & then if close the putty or session then automatically running appln are stop]
+java -jar target/TelecomAppEurekaServer-1.0.jar &
+//run the appln through mvn
+mvn spring-boot:run
+//stop the application through mvn
+mvn spring-boot:stop
+
+
+
+//for paste text into putty terminal
+right mouse click+hold shift key+insert key
+
+//copy text from putty terminal
+left mouse click+drag text and release left mouse click  //double click for selected or draged text  //tripple click for copy entrie line
+
+//ls cmd for listing the files and folder from directory
+//you can see all downloaded files and folders
+ls
+
+note:
+//while ruuning the spring boot appln on virtual server then delete target directory ,and mvnw window file,mvnw window script file because it is build on window machine
+//when deploy or run on linux machine and build through maven it is automatically generated linux build
+
+//by default ec2 username:ec2-user 
+
+//Error:Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.2:test (default-test) on project CallDetails: There are test failures.
+//soln1:mvn clean install -DskipTests or mvn clean package -DskipTests
+//soln2:update with latest maven surefire plugin  
+<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+<dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0-M5</version>
+</dependency>
+//soln3:remove testcases files
+sudo chmod 777 Plan/               //apply permission otherwise say access is denied
+sudo rm PlanApplicationTest.java
+//error
+: Cannot create resource   output directory: /home/ec2-user/three/services3/ApiGateway/target/classes 
+//soln:you have not apply permission write permission:sudo chmod 777 ApiGateway
+
+//error
+mysqldump: Got errno 22 on write
+//soln:write proper syntax
+
+//error
+mysqldump: Got error: 2003: "Can't connect to MySQL server on 'localhost' (10061 "Unknown error")" when trying to connect
+//soln:if you are using xampp then make sure mysql services are running[start apache tomcat + start mysql]
+
+
+//////////////////////////////////
+about vi [visual in editor or visual editor]
+//open vi editor for modifying file on virtual server
+vi application.properties
+//note:before modifying make sure permission is there on file otherwise say application.properties  is read only 
+//apply permissions
+sudo chmod 777 application.properties
+//insert mode
+press i
+//quit insert mode
+press esc
+//quit without saving or modifying
+:q!
+//quit after saving //press esc + :wq
+:wq         
+//quit after saving with overrite
+:wq!
+
+
+/////////////////////////////
+//check process
+ps
+//Killing a process means that you terminate a running application or command. You can kill a process by running the kill command with the process ID or the pkill command with the process name like so:
+//kill process
+kill [PID]
+or
+
+pkill [COMMAND]
+
+
+
+
+
+
+
