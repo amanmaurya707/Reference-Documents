@@ -1,0 +1,38 @@
+//error:
+org.springframework.web.multipart.MultipartException: Current request is not a multipart request
+//soln:
+make sure while sending to server method action is post
+make sure enctype="multipart/form-data"
+make sure mulipart handler method annotated with PostMapping
+note:
+always return form with getmapping
+
+@GetMapping(value="/AddProduct")
+public ModelAndView addProduct(@ModelAttribute("productBean") ProductBean productBean)
+{
+	//System.out.println("*****&&&&&&****"+productBean.getProductImage());
+	
+	return new ModelAndView("addProduct");
+	
+}
+@PostMapping(value="/SaveProduct")
+public ModelAndView saveProduct(@ModelAttribute("productBean") ProductBean productBean ,@RequestParam("productImage") MultipartFile file)
+{
+	System.out.println("*****&&&&&&****"+productBean.getProductImage());
+		
+	return new ModelAndView("redirect:/showProduct");
+	
+}
+
+//error:
+java.lang.IllegalArgumentException: Cannot convert value of type 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 'java.lang.Byte' for property 'productImage[0]':
+//soln:
+change byte to mulipartfile type in model class
+public class ProductBean {
+String productName;
+Double price;
+String category;
+Integer quantity;
+String description;
+MultipartFile  productImage;//changes here
+}
