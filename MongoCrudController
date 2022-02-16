@@ -1,0 +1,116 @@
+package com.category.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.category.model.Category;
+import com.category.repository.CategoryRepository;
+import com.category.service.SequenceGeneratorService;
+
+@RestController
+public class CategoryController {
+	@Autowired
+	CategoryRepository repo;
+	
+	@Autowired
+	SequenceGeneratorService generatorService;
+	
+	@GetMapping("/listAllCategory")
+	public ResponseEntity<?> getAllCategory()
+	{
+		return ResponseEntity.ok(repo.findAll());
+		
+	}
+	@GetMapping("/listAllCategory/{pageNo}/{pageSize}")
+	public ResponseEntity<List<Category>> getAllCategoryWithPagingAndSorting(@PathVariable(value = "pageNo") int pageNo,@PathVariable(value = "pageSize") int pageSize)
+	{
+		Sort sort=Sort.by(Direction.ASC, "id");
+		Pageable page=PageRequest.of(pageNo, pageSize,sort);
+		//Pageable page=PageRequest.of(pageNo, pageSize);
+		//Page<Category> pageResult=repo.findAll(page);
+		/*
+		 * if (pageResult.hasContent()) {
+		 * System.out.println("total pages"+pageResult.getTotalPages());
+		 * System.out.println("total records"+pageResult.getNumberOfElements());
+		 * List<Category> categoryList=pageResult.getContent(); }
+		 */
+		
+		return new ResponseEntity<List<Category>>(repo.findAll(page).getContent(), HttpStatus.OK);
+		
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getCategoryById(@PathVariable Long id)
+	{
+		return ResponseEntity.ok(repo.findById(id).get());
+		
+	}
+	@GetMapping("/category/{category}")
+	public ResponseEntity<?> findCategoryByName(@PathVariable String category)
+	{
+		return ResponseEntity.ok(repo.findByCategoryName(category).get());
+		
+	}
+	@GetMapping("/searchAll/{category}")
+	public ResponseEntity<List<Category>> searchAllCategoriesStartWithName(@PathVariable String category)
+	{
+		return ResponseEntity.ok(repo.findAllCategoriesStartWithName(category));
+		
+	}
+	@PostMapping("/addCategory")//@RequestBody deserialized the json data format to java object
+	public ResponseEntity<?> addCategory(@RequestBody Category category)
+	{
+		
+		
+		category.setId(generatorService.generateSequence(Category.SEQUENCE_NAME));
+		return ResponseEntity.ok(repo.save(category));
+		
+		
+	}
+	@PutMapping("/updateCategory")//@RequestBody deserialized the json data format to java object
+	public ResponseEntity<?> updateCategory(@RequestBody Category category)
+	{
+		boolean isExist=repo.existsById(category.getId());
+		if (isExist) {
+			return ResponseEntity.ok(repo.save(category));	
+		}
+		else
+		{
+		return null;
+		}
+	
+		
+		
+		
+	}
+	
+	@DeleteMapping("/deleteCategory/{id}")
+	public ResponseEntity<String> deleteCategoryById(@PathVariable Long id)
+	{
+        repo.deleteById(id);
+		return new ResponseEntity<String>("deleted",HttpStatus.OK);
+		
+	}
+	@DeleteMapping("/deleteAllCategory")
+	public ResponseEntity<String>  deleteAllCategory()
+	{
+		System.out.println(repo.count());
+        repo.deleteAll();
+		return new ResponseEntity<String>("deleted all categories",HttpStatus.OK);
+		
+	}
+}
